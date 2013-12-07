@@ -70,13 +70,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\common\db_gen.h" />
     <ClInclude Include="..\common\gps_coord.h" />
     <ClInclude Include="..\common\gps_tagged_image.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\common\db_gen.cpp" />
     <ClCompile Include="..\common\gps_coord.cpp" />
     <ClCompile Include="..\common\gps_tagged_image.cpp" />
-    <ClCompile Include="db_gen.cpp" />
+    <ClCompile Include="run_db_gen.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,24 +1,13 @@
-#include <string>
-#include <exiv2/exiv2.hpp>
-#include <gps_tagged_image.h>
+#include "db_gen.h"
 
-#include <boost/filesystem.hpp>   // includes all needed Boost.Filesystem declarations
-#include <iostream>               
-
-using namespace boost::filesystem;         
+using namespace boost::filesystem;
 using namespace std;
 
-
-int main(int argc, char** argv)
+IMAGE_DB generateDB(string inputDirPath) // creates IMAGE_DB for images in given inputDirPath, @see IMAGE_DB typedef in db_gen.h
 {
-    if (argc != 2)
-    {
-        cout << " Usage: db_gen dirPath" << endl;
-        return -1;
-    }
-    
     // 1st argument - path to the dir containing all the tiles
-    path dirPath(argv[1]);
+    path dirPath(inputDirPath);
+    // default directory_iterator construction yields past-the-end
     directory_iterator end_itr;
 
     vector<GPS_TAGGED_IMAGE> vecImageInterimDb; // create empty vector for storing interim version of the image DB (unsorted and 1D)
@@ -53,14 +42,14 @@ int main(int argc, char** argv)
     sort(vecImageInterimDb.begin(), vecImageInterimDb.end());   // sort the interim DB vector (by means of overloaded operator<)
 
     vector <GPS_TAGGED_IMAGE> vecRowDb;                         // create empty vector for storing one row of image DB
-    vector <vector <GPS_TAGGED_IMAGE>> vecImageDb;              // create empty vector for storing final version of the image DB (sorted and 2D)
+    IMAGE_DB vecImageDb;                                        // create empty vector for storing final version of the image DB (sorted and 2D), @see IMAGE_DB typedef in db_gen.h
 
     vecRowDb.push_back(vecImageInterimDb.front());              // push back the FIRST image to the row DB vector
-    
+
     for (auto it = vecImageInterimDb.cbegin() + 1; it != vecImageInterimDb.cend(); ++it)                // start iterating from the 2nd element as the 1st one has already been pushed back
     {
-        if (vecRowDb.back().GetTopLeft().GetLatitudeDouble() == it->GetTopLeft().GetLatitudeDouble())   // image belongs to the same row in DB if the latitude is the same as in previous element
-            vecRowDb.push_back(*it);
+        if (fabs(vecRowDb.back().GetTopLeft().GetLatitudeDouble() - it->GetTopLeft().GetLatitudeDouble()) < numeric_limits<double>::epsilon())   
+            vecRowDb.push_back(*it);                                                                    // image belongs to the same row in DB if the latitude is the same as in previous element
         else                                                                                            // image belongs to the next row in DB if the latitude is different to the previous element's latitude
         {
             vecImageDb.push_back(vecRowDb);                                                             // push back the previous row 
@@ -70,11 +59,12 @@ int main(int argc, char** argv)
     }
     vecImageDb.push_back(vecRowDb);                                                                     // push back the LAST row 
 
-    //std::cout << vecImageDb.size() << endl;
+    //// DEBUG
+    //std::copy(vecRowDb.begin(), vecRowDb.end(), std::ostream_iterator<GPS_TAGGED_IMAGE>(std::cout, " "));
+    //cout << vecImageDb.size() << endl;
     //for (auto n : vecImageDb) {
-    //    std::cout << n.size() << " ";
+    //    cout << n.size() << " ";
     //}
-    
-    
-    return 0;
+
+    return vecImageDb;
 }
