@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.20827.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bmp_splitter", "bmp_splitter\bmp_splitter.vcxproj", "{0202E560-3BE8-40C9-A5E5-42BEE9156699}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "db_gen", "db_gen\db_gen.vcxproj", "{AE03774E-5415-45C5-A348-A1541BEC934B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0202E560-3BE8-40C9-A5E5-42BEE9156699}.Debug|x64.ActiveCfg = Debug|x64
+		{0202E560-3BE8-40C9-A5E5-42BEE9156699}.Debug|x64.Build.0 = Debug|x64
+		{0202E560-3BE8-40C9-A5E5-42BEE9156699}.Release|x64.ActiveCfg = Release|x64
+		{0202E560-3BE8-40C9-A5E5-42BEE9156699}.Release|x64.Build.0 = Release|x64
+		{AE03774E-5415-45C5-A348-A1541BEC934B}.Debug|x64.ActiveCfg = Debug|x64
+		{AE03774E-5415-45C5-A348-A1541BEC934B}.Debug|x64.Build.0 = Debug|x64
+		{AE03774E-5415-45C5-A348-A1541BEC934B}.Release|x64.ActiveCfg = Release|x64
+		{AE03774E-5415-45C5-A348-A1541BEC934B}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
