@@ -13,8 +13,13 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    mapwidget.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    mapwidget.h
 
 FORMS    += mainwindow.ui
+
+LIBS        += -L.\vlc-qt\lib\ -lvlc-qt -lvlc-qt-widgets
+INCLUDEPATH += .\vlc-qt\include\

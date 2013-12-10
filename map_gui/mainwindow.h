@@ -4,19 +4,30 @@
 #include <QMainWindow>
 
 namespace Ui {
-class MainWindow;
+class SimMapWindow;
 }
 
-class MainWindow : public QMainWindow
+class VlcInstance;
+class VlcMedia;
+class VlcMediaPlayer;
+
+class SimMapWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    explicit SimMapWindow(QWidget *parent = 0);
+    ~SimMapWindow();
+
+private slots:
+    void openMjpegUrl();
 
 private:
-    Ui::MainWindow *ui;
+    Ui::SimMapWindow *ui;
+
+    VlcInstance *_instance;
+    VlcMedia *_media;
+    VlcMediaPlayer *_player;
 };
 
 #endif // MAINWINDOW_H

@@ -12,6 +12,6 @@ int main(int argc, char** argv)
 
     // 1st argument - path to the dir containing all the tiles
     auto vecImageDatabase = generateDB(argv[1]);
-    
+
     return 0;
 }
