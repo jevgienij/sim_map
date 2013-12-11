@@ -4,6 +4,8 @@
 #include <QtGui>
 #include <QWidget>
 
+#include <db_gen.h>
+
 class MapWidget : public QWidget
 {
     Q_OBJECT
@@ -11,7 +13,9 @@ public:
     explicit MapWidget(QWidget *parent = 0);
 
 protected:
-    void paintEvent(QPaintEvent *event);
+    void paintEvent(QPaintEvent *);
+    IMAGE_DB imageDatabase;
+    int iTileSize;
 
 signals:
 

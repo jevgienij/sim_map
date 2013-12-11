@@ -14,10 +14,12 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QDockWidget>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QScrollArea>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QVBoxLayout>
@@ -31,7 +33,10 @@ class Ui_SimMapWindow
 {
 public:
     QAction *actionOpenUrl;
-    MapWidget *widget;
+    QWidget *centralQWidget;
+    QHBoxLayout *horizontalLayout;
+    QScrollArea *scrollArea;
+    MapWidget *mapWidget;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -48,9 +53,25 @@ public:
         SimMapWindow->resize(1020, 535);
         actionOpenUrl = new QAction(SimMapWindow);
         actionOpenUrl->setObjectName(QStringLiteral("actionOpenUrl"));
-        widget = new MapWidget(SimMapWindow);
-        widget->setObjectName(QStringLiteral("widget"));
-        SimMapWindow->setCentralWidget(widget);
+        centralQWidget = new QWidget(SimMapWindow);
+        centralQWidget->setObjectName(QStringLiteral("centralQWidget"));
+        centralQWidget->setEnabled(true);
+        horizontalLayout = new QHBoxLayout(centralQWidget);
+        horizontalLayout->setSpacing(6);
+        horizontalLayout->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        scrollArea = new QScrollArea(centralQWidget);
+        scrollArea->setObjectName(QStringLiteral("scrollArea"));
+        scrollArea->setLineWidth(1);
+        scrollArea->setWidgetResizable(false);
+        mapWidget = new MapWidget();
+        mapWidget->setObjectName(QStringLiteral("mapWidget"));
+        mapWidget->setGeometry(QRect(0, 0, 599, 462));
+        scrollArea->setWidget(mapWidget);
+
+        horizontalLayout->addWidget(scrollArea);
+
+        SimMapWindow->setCentralWidget(centralQWidget);
         menuBar = new QMenuBar(SimMapWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
         menuBar->setGeometry(QRect(0, 0, 1020, 21));
