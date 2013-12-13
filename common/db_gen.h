@@ -14,7 +14,3 @@ typedef std::vector <std::vector <GPS_TAGGED_IMAGE>> IMAGE_DB;
 IMAGE_DB generateDB(std::string inputDirPath);
 
 #endif
-
-
-
-

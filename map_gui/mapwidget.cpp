@@ -1,5 +1,5 @@
 #include "mapwidget.h"
- #include <QMessageBox>
+#include <QMessageBox>
 
 
 MapWidget::MapWidget(QWidget *parent) :
@@ -8,13 +8,13 @@ MapWidget::MapWidget(QWidget *parent) :
     imageDatabase = generateDB("C:\\Users\\Carlos\\Documents\\mgr\\moja\\sim_map\\resources\\tiles\\");
     // TODO iTileSize checking while creating DB
 
-    QString filename =  QString::fromStdString(imageDatabase[0[0].GetFilepath());
+    QString filename =  QString::fromStdString(imageDatabase[0][0].GetFilepath());
     QImage image(filename);
     if (image.isNull()) {
                  QMessageBox::information(this, tr("DB gen for Sim map"),
-                                          tr("Cannot load %1.").arg(filename)); return -1;}
+                                          tr("Cannot load %1.").arg(filename)); return;}
     iTileSize = image.width();
-    ~image(); // OK?
+    //~image(); // OK?
 }
 
 void MapWidget::paintEvent(QPaintEvent *)
@@ -37,25 +37,25 @@ void MapWidget::paintEvent(QPaintEvent *)
     // top left corner: tile[UAVcol-tileColsInView][UAVrow+tileRowsInView]
     // bot rght corner: tile[UAVcol+tileColsInView][UAVrow-tileRowsInView]
 
-    int tileColsInView = parentWidget()->width() / image.width();
-    int tileRowsInView = parentWidget()->height() / image.height();
+    //int tileColsInView = parentWidget()->width() / image.width();
+    //int tileRowsInView = parentWidget()->height() / image.height();
 
-    int tileColsToLoad = 2*tileColsInView;
-    int tileRowsToLoad = 2*tileRowsInView; // TODO do wyrzucenia!!!
+    //int tileColsToLoad = 2*tileColsInView;
+    //int tileRowsToLoad = 2*tileRowsInView; // TODO do wyrzucenia!!!
 
     // petle na odwrot? czy to ma znaczenie?
-    for (auto it_row=0;it_row<tileRowsToLoad;it_row++) // for (auto it_row=UAVrow+tileRowsInView;it_row>UAVrow-tileRowsInView;it_row--)
-    {
-        for (auto it_col=0;it_col<tileColsToLoad;it_col++) // for (auto it_col=UAVcol-tileColsInView;it_col<UAVcol+tileColsInView;it_col++)
-        {
+//    for (auto it_row=0;it_row<tileRowsToLoad;it_row++) // for (auto it_row=UAVrow+tileRowsInView;it_row>UAVrow-tileRowsInView;it_row--)
+//    {
+//        for (auto it_col=0;it_col<tileColsToLoad;it_col++) // for (auto it_col=UAVcol-tileColsInView;it_col<UAVcol+tileColsInView;it_col++)
+//        {
 
-            QString filename =  QString::fromStdString(imageDatabase[it_col][it_row].GetFilepath()); //[it_col][it_row] dobrze?????
-            QImage image(filename);
-            //if (image.isNull()) //zaladuj resource mapa niedostepna! NIEEEE! Tlo zawsze jako "Mapa niedostepna", painter najwyzej przykryje!
+//            QString filename =  QString::fromStdString(imageDatabase[it_col][it_row].GetFilepath()); //[it_col][it_row] dobrze?????
+//            QImage image(filename);
+//            //if (image.isNull()) //zaladuj resource mapa niedostepna! NIEEEE! Tlo zawsze jako "Mapa niedostepna", painter najwyzej przykryje!
 
-            painter.drawImage( (it_col-(UAVcol-tileColsInView))*iTileSize, ((UAVrow+tileRowsInView)-it_row)*iTileSize, image);
-        }
-    }
+//            painter.drawImage( (it_col-(UAVcol-tileColsInView))*iTileSize, ((UAVrow+tileRowsInView)-it_row)*iTileSize, image);
+//        }
+//    }
 
     // narysuj UAV
     // narysuj Etykiete z info

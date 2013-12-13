@@ -27,5 +27,5 @@ INCLUDEPATH += .\vlc-qt\include\
 INCLUDEPATH += .\..\common\
 INCLUDEPATH += .\..\common\exiv2\msvc64\include\
 
-LIBS        += -L"c:\boost_1_55_0\lib64-msvc-12.0\" -llibboost_filesystem-vc120-mt-1_55
+LIBS        += -Lc:\boost_1_55_0\lib64-msvc-12.0\ -llibboost_filesystem-vc120-mt-1_55
 INCLUDEPATH += $(BOOST_ROOT)
