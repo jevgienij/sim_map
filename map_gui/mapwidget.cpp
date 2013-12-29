@@ -27,35 +27,52 @@ void MapWidget::paintEvent(QPaintEvent *)
     painter.drawLine(1,1,this->width()-100,this->height()-100);
 
     //
-    double dUavLongitude;   //[deg]
-    double dUavLatitude;    //[deg]
-    double dUavAltitude;    //[m]
+    double dUavLongitude = 21.05;   //[deg]
+    double dUavLatitude  = 51.95;    //[deg]
+    double dUavAltitude = 0.0;    //[m]
     // something else?
 
+	int iUAVcol;
+	int iUAVrow;
+
     // select the tile in which is the UAV as [UAVcol][UAVrow]
+
+	for (int i_row = 0; i_row < imageDatabase.size(); ++i_row)
+	{
+		for (int i_col = 0; i_col < imageDatabase.at(i_row).size(); ++i_col)
+		{
+			if(dUavLatitude  <= imageDatabase[i_row][i_col].GetTopLeft().GetLatitudeDouble()  && dUavLatitude  > imageDatabase[i_row][i_col].GetBotRght().GetLatitudeDouble() &&
+			   dUavLongitude >= imageDatabase[i_row][i_col].GetTopLeft().GetLongitudeDouble() && dUavLongitude < imageDatabase[i_row][i_col].GetBotRght().GetLongitudeDouble() )
+			{
+				iUAVcol = i_col;
+				iUAVrow = i_row;
+			}
+		}
+	}
+
     // load the tiles in THE FOLLOWING AREA:
     // top left corner: tile[UAVcol-tileColsInView][UAVrow+tileRowsInView]
     // bot rght corner: tile[UAVcol+tileColsInView][UAVrow-tileRowsInView]
 
-    //int tileColsInView = parentWidget()->width() / image.width();
-    //int tileRowsInView = parentWidget()->height() / image.height();
+	// setting desired painted size to 1100
+    int tileColsInView = 5; //parentWidget()->width() / image.width();
+    int tileRowsInView = 5; //parentWidget()->height() / image.height();
 
-    //int tileColsToLoad = 2*tileColsInView;
-    //int tileRowsToLoad = 2*tileRowsInView; // TODO do wyrzucenia!!!
+     //petle na odwrot? czy to ma znaczenie?
+    for (auto it_row=iUAVrow+tileRowsInView;it_row>iUAVrow-tileRowsInView;it_row--)
+    {
+        for (auto it_col=iUAVcol-tileColsInView;it_col<iUAVcol+tileColsInView;it_col++)
+        {
 
-    // petle na odwrot? czy to ma znaczenie?
-//    for (auto it_row=0;it_row<tileRowsToLoad;it_row++) // for (auto it_row=UAVrow+tileRowsInView;it_row>UAVrow-tileRowsInView;it_row--)
-//    {
-//        for (auto it_col=0;it_col<tileColsToLoad;it_col++) // for (auto it_col=UAVcol-tileColsInView;it_col<UAVcol+tileColsInView;it_col++)
-//        {
+            QString filename =  QString::fromStdString(imageDatabase[it_col][it_row].GetFilepath()); //[it_col][it_row] dobrze czy na odwrot?????
+            QImage image(filename);
+            //if (image.isNull()) //zaladuj resource mapa niedostepna! NIEEEE! Tlo zawsze jako "Mapa niedostepna", painter najwyzej przykryje!
 
-//            QString filename =  QString::fromStdString(imageDatabase[it_col][it_row].GetFilepath()); //[it_col][it_row] dobrze?????
-//            QImage image(filename);
-//            //if (image.isNull()) //zaladuj resource mapa niedostepna! NIEEEE! Tlo zawsze jako "Mapa niedostepna", painter najwyzej przykryje!
+            painter.drawImage( (it_col-(iUAVcol-tileColsInView))*iTileSize, ((iUAVrow+tileRowsInView)-it_row)*iTileSize, image);
 
-//            painter.drawImage( (it_col-(UAVcol-tileColsInView))*iTileSize, ((UAVrow+tileRowsInView)-it_row)*iTileSize, image);
-//        }
-//    }
+			//rysuje w odwrotnej kolejnosci!
+        }
+    }
 
     // narysuj UAV
     // narysuj Etykiete z info
