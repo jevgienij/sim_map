@@ -63,10 +63,14 @@ public:
         scrollArea = new QScrollArea(centralQWidget);
         scrollArea->setObjectName(QStringLiteral("scrollArea"));
         scrollArea->setLineWidth(1);
+        scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         scrollArea->setWidgetResizable(false);
+        scrollArea->setAlignment(Qt::AlignCenter);
         mapWidget = new MapWidget();
         mapWidget->setObjectName(QStringLiteral("mapWidget"));
-        mapWidget->setGeometry(QRect(0, 0, 599, 462));
+        mapWidget->setEnabled(true);
+        mapWidget->setGeometry(QRect(0, 0, 900, 900));
         scrollArea->setWidget(mapWidget);
 
         horizontalLayout->addWidget(scrollArea);

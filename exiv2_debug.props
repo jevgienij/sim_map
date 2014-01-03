@@ -8,9 +8,10 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <AdditionalIncludeDirectories>$(SolutionDir)\common\;$(SolutionDir)\common\exiv2\msvc64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableLanguageExtensions />
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(SolutionDir)\common\exiv2\msvc64\exiv2lib\x64\DebugDLL\;c:\Users\Carlos\Documents\mgr\moja\sim_map\common\exiv2\msvc64\exiv2lib\x64\DebugDLL\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>c:\Users\Carlos\Documents\mgr\moja\sim_map\common\exiv2\msvc64\exiv2lib\x64\DebugDLL\;$(SolutionDir)\common\exiv2\msvc64\exiv2lib\x64\DebugDLL\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>exiv2d.lib;libexpat.lib;zlib1d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>

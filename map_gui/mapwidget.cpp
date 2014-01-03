@@ -1,5 +1,4 @@
 #include "mapwidget.h"
-#include <QMessageBox>
 
 
 MapWidget::MapWidget(QWidget *parent) :
@@ -10,9 +9,11 @@ MapWidget::MapWidget(QWidget *parent) :
 
     QString filename =  QString::fromStdString(imageDatabase[0][0].GetFilepath());
     QImage image(filename);
-    if (image.isNull()) {
-                 QMessageBox::information(this, tr("DB gen for Sim map"),
-                                          tr("Cannot load %1.").arg(filename)); return;}
+    if (image.isNull()) 
+	{
+		QMessageBox::critical(this, tr("DB gen for Sim map"), tr("Cannot load %1.").arg(filename)); 
+		return;
+	}
     iTileSize = image.width();
     //~image(); // OK?
 }
@@ -24,7 +25,7 @@ void MapWidget::paintEvent(QPaintEvent *)
     QPainter painter(this);
 
     //a simple line
-    painter.drawLine(1,1,this->width()-100,this->height()-100);
+    painter.drawLine(1,1,this->width()+500,this->height()+500);
 
     //
     double dUavLongitude = 21.05;   //[deg]
@@ -50,52 +51,88 @@ void MapWidget::paintEvent(QPaintEvent *)
 		}
 	}
 
-    // load the tiles in THE FOLLOWING AREA:
+    // load and draw tiles in THE FOLLOWING AREA:
     // top left corner: tile[UAVcol-tileColsInView][UAVrow+tileRowsInView]
     // bot rght corner: tile[UAVcol+tileColsInView][UAVrow-tileRowsInView]
 
-	// setting desired painted size to 1100
-    int tileColsInView = 5; //parentWidget()->width() / image.width();
-    int tileRowsInView = 5; //parentWidget()->height() / image.height();
 
-     //petle na odwrot? czy to ma znaczenie?
-    for (auto it_row=iUAVrow+tileRowsInView;it_row>iUAVrow-tileRowsInView;it_row--)
+	// setting desired painted size to 900
+	
+	int tileColsInView = (this->width()/iTileSize  + 1) / 2; //parentWidget()->width() / image.width();
+    int tileRowsInView = (this->height()/iTileSize + 1) / 2; //parentWidget()->height() / image.height();
+
+	std::ofstream Cfg("./log.txt");
+	Cfg << "# BEGIN #" << std::endl;
+
+    for (int it_row=iUAVrow+tileRowsInView-1;it_row>=iUAVrow-tileRowsInView;it_row--)
     {
-        for (auto it_col=iUAVcol-tileColsInView;it_col<iUAVcol+tileColsInView;it_col++)
+        for (int it_col=iUAVcol-tileColsInView;it_col<iUAVcol+tileColsInView;it_col++)
         {
 
             QString filename =  QString::fromStdString(imageDatabase[it_col][it_row].GetFilepath()); //[it_col][it_row] dobrze czy na odwrot?????
             QImage image(filename);
-            //if (image.isNull()) //zaladuj resource mapa niedostepna! NIEEEE! Tlo zawsze jako "Mapa niedostepna", painter najwyzej przykryje!
 
-            painter.drawImage( (it_col-(iUAVcol-tileColsInView))*iTileSize, ((iUAVrow+tileRowsInView)-it_row)*iTileSize, image);
+            painter.drawImage( (it_col-(iUAVcol-tileColsInView))*iTileSize, (it_row-(iUAVrow-tileRowsInView))*iTileSize, image);
 
-			//rysuje w odwrotnej kolejnosci!
+			Cfg << "it_col "<<it_col <<std::endl;	
+			Cfg << "it_row "<<it_row <<std::endl;	
+			Cfg << "tileColsInView "<<tileColsInView <<std::endl;	
+			Cfg << "tileRowsInView "<<tileRowsInView <<std::endl;	
+			Cfg << "iUAVcol "<<iUAVcol <<std::endl;	
+			Cfg << "iUAVrow "<<iUAVrow <<std::endl;	
+			Cfg << "iTileSize "<<iTileSize <<std::endl;	
+		    Cfg << (it_col-(iUAVcol-tileColsInView))*iTileSize << " " <<(it_row-(iUAVrow-tileRowsInView))*iTileSize << std::endl;
+			Cfg << std::endl;
+
         }
     }
+	
+	Cfg << "# END #"    << std::endl;
+    Cfg.close();
+	
+	// draw UAV icon
+    QString filename =  QString::fromStdString("C:\\Users\\Carlos\\Documents\\mgr\\moja\\sim_map\\resources\\input\\uav32.png");
+	QImage uavIcon(filename);
 
-    // narysuj UAV
-    // narysuj Etykiete z info
+	int iUavPxPosition = iUAVcol*iTileSize;
+	int iUavPyPosition = iUAVrow*iTileSize;
+
+	painter.drawImage(iUavPxPosition, iUavPyPosition, uavIcon); // obliczanie wspolrzednych, funkcja skali w GPS_COORD! przeladowany operator*
+	if (uavIcon.isNull())
+	{
+		QMessageBox::warning(this, tr("Map widget error"), tr("Cannot load UAV icon from %1.").arg(filename)); 
+		return;
+	}
+    
+	// draw UAV info label
+	painter.setBackgroundMode(Qt::OpaqueMode);
+	painter.setBackground(QBrush(QColor(255, 255, 225), Qt::SolidPattern));
+	
+	int iUavLabelSpacing = 20;
+    QString sUavLabel =  QString::fromStdString(" Latitude: " + std::to_string(dUavLatitude) + " Longitude: " + std::to_string(dUavLongitude) + " Altitude: " + std::to_string(dUavAltitude) + " ");
+	painter.drawText(iUavPxPosition + iUavLabelSpacing, iUavPyPosition - iUavLabelSpacing, sUavLabel);
+
+	// draw path
 
 
 
-    //painter.drawImage(300, 600, image);
-    //create a black pen that has solid line
-    //and the width is 2.
-    QPen myPen(Qt::black, 2, Qt::SolidLine);
-    painter.setPen(myPen);
-    painter.drawLine(100,100,100,1);
+    ////painter.drawImage(300, 600, image);
+    ////create a black pen that has solid line
+    ////and the width is 2.
+    //QPen myPen(Qt::black, 2, Qt::SolidLine);
+    //painter.setPen(myPen);
+    //painter.drawLine(1,1,this->width()+500,this->height()+500);
 
-    //draw a point
-    myPen.setColor(Qt::red);
-    painter.drawPoint(110,110);
+    ////draw a point
+    //myPen.setColor(Qt::red);
+    //painter.drawPoint(110,110);
 
-    //draw a polygon
-    QPolygon polygon;
-    polygon << QPoint(130, 140) << QPoint(180, 170)
-             << QPoint(180, 140) << QPoint(220, 110)
-             << QPoint(140, 100);
-     painter.drawPolygon(polygon);
+    ////draw a polygon
+    //QPolygon polygon;
+    //polygon << QPoint(130, 140) << QPoint(180, 170)
+    //         << QPoint(180, 140) << QPoint(220, 110)
+    //         << QPoint(140, 100);
+    // painter.drawPolygon(polygon);
 
      //draw an ellipse
      //The setRenderHint() call enables antialiasing, telling QPainter to use different

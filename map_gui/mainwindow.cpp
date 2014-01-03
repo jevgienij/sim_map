@@ -22,7 +22,7 @@ SimMapWindow::SimMapWindow(QWidget *parent) :
     _player->setVideoWidget(ui->video);
 
     ui->video->setMediaPlayer(_player);
-
+	
     connect(ui->setStreamUrl, SIGNAL(clicked()), this, SLOT(openMjpegUrl()));
 }
 
@@ -46,3 +46,14 @@ void SimMapWindow::openMjpegUrl()
 
     _player->open(_media);
 }
+ void SimMapWindow::resizeEvent(QResizeEvent *event)
+ {	 
+    adjustScrollBar(ui->scrollArea->verticalScrollBar());
+	adjustScrollBar(ui->scrollArea->horizontalScrollBar());
+    QWidget::resizeEvent(event);
+ }
+
+ void SimMapWindow::adjustScrollBar(QScrollBar *scrollBar)
+ {
+	scrollBar->setValue((scrollBar->minimum() + scrollBar->maximum())/2);
+ }

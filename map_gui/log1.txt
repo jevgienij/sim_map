@@ -1,0 +1,5 @@
+# BEGIN #
+scrollBar->value() 187
+scrollBar->minimum() 0
+scrollBar->maximum() 375
+# END #

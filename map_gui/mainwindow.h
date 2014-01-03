@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QScrollBar>
 
 namespace Ui {
 class SimMapWindow;
@@ -9,7 +10,7 @@ class SimMapWindow;
 
 class VlcInstance;
 class VlcMedia;
-class VlcMediaPlayer;
+class VlcMediaPlayer; 
 
 class SimMapWindow : public QMainWindow
 {
@@ -18,6 +19,11 @@ class SimMapWindow : public QMainWindow
 public:
     explicit SimMapWindow(QWidget *parent = 0);
     ~SimMapWindow();
+    
+	void adjustScrollBar(QScrollBar *scrollBar);
+
+protected:
+    void resizeEvent(QResizeEvent *event);
 
 private slots:
     void openMjpegUrl();

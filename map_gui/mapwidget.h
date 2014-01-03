@@ -3,6 +3,9 @@
 
 #include <QtGui>
 #include <QWidget>
+#include <QMessageBox>
+
+#include <fstream>
 
 #include <db_gen.h>
 

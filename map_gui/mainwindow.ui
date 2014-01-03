@@ -23,16 +23,28 @@
       <property name="lineWidth">
        <number>1</number>
       </property>
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
       <property name="widgetResizable">
        <bool>false</bool>
       </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
       <widget class="MapWidget" name="mapWidget">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
        <property name="geometry">
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>599</width>
-         <height>462</height>
+         <width>900</width>
+         <height>900</height>
         </rect>
        </property>
       </widget>
