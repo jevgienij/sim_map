@@ -20,6 +20,7 @@ public:
     GPS_COORD& operator-=(const GPS_COORD& rhs);
     GPS_COORD& operator*=(const GPS_COORD& rhs);    // SCALING OPERATOR: rhs is in fact a 2-dimensional scale factor!
     GPS_COORD& operator*=(const double& rhs);       // SCALING OPERATOR: rhs is in fact a scale factor keeping aspect ratio!
+    GPS_COORD& operator/=(const GPS_COORD& rhs);    // SCALING OPERATOR: rhs is in fact a 2-dimensional scale factor!
     bool       operator< (const  GPS_COORD& rhs) const;
 
     // methods
@@ -50,6 +51,7 @@ const GPS_COORD operator-(const GPS_COORD& lhs, const GPS_COORD& rhs);
 const GPS_COORD operator*(const GPS_COORD& lhs, const GPS_COORD& rhs);
 const GPS_COORD operator*(const GPS_COORD& lhs, const double& rhs);
 const GPS_COORD operator*(const double& lhs, const GPS_COORD& rhs);
+const GPS_COORD operator/(const GPS_COORD& lhs, const GPS_COORD& rhs);
 std::ostream& operator<< (std::ostream& wyjscie, const GPS_COORD& gps);
 
 #endif

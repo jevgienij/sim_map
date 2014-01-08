@@ -1,5 +1,3 @@
-# BEGIN #
-scrollBar->value() 187
-scrollBar->minimum() 0
-scrollBar->maximum() 375
+C:/Users/Carlos/Documents/mgr/moja/sim_map/x64/Release
+C:/Users/Carlos/Documents/mgr/moja/sim_map/x64/Release/../../resources/tiles/
 # END #

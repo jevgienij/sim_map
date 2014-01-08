@@ -17,11 +17,9 @@
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMainWindow>
-#include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QScrollArea>
 #include <QtWidgets/QStatusBar>
-#include <QtWidgets/QToolBar>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 #include "mapwidget.h"
@@ -37,8 +35,6 @@ public:
     QHBoxLayout *horizontalLayout;
     QScrollArea *scrollArea;
     MapWidget *mapWidget;
-    QMenuBar *menuBar;
-    QToolBar *mainToolBar;
     QStatusBar *statusBar;
     QDockWidget *dockWidget;
     QWidget *dockWidgetContents;
@@ -76,15 +72,9 @@ public:
         horizontalLayout->addWidget(scrollArea);
 
         SimMapWindow->setCentralWidget(centralQWidget);
-        menuBar = new QMenuBar(SimMapWindow);
-        menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1020, 21));
-        SimMapWindow->setMenuBar(menuBar);
-        mainToolBar = new QToolBar(SimMapWindow);
-        mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
-        SimMapWindow->addToolBar(Qt::TopToolBarArea, mainToolBar);
         statusBar = new QStatusBar(SimMapWindow);
         statusBar->setObjectName(QStringLiteral("statusBar"));
+        statusBar->setEnabled(false);
         SimMapWindow->setStatusBar(statusBar);
         dockWidget = new QDockWidget(SimMapWindow);
         dockWidget->setObjectName(QStringLiteral("dockWidget"));
@@ -130,7 +120,7 @@ public:
 
     void retranslateUi(QMainWindow *SimMapWindow)
     {
-        SimMapWindow->setWindowTitle(QApplication::translate("SimMapWindow", "MainWindow", 0));
+        SimMapWindow->setWindowTitle(QApplication::translate("SimMapWindow", "Sim Map", 0));
         actionOpenUrl->setText(QApplication::translate("SimMapWindow", "Open URL", 0));
         setStreamUrl->setText(QApplication::translate("SimMapWindow", "Set stream URL", 0));
     } // retranslateUi

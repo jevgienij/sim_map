@@ -269,6 +269,11 @@
     <ClCompile Include="..\common\db_gen.cpp" />
     <ClCompile Include="..\common\gps_coord.cpp" />
     <ClCompile Include="..\common\gps_tagged_image.cpp" />
+    <ClCompile Include="ai_socket.cpp" />
+    <ClCompile Include="Debug\moc_listener.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Debug\moc_mainwindow.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
@@ -277,9 +282,14 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="listener.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mainwindow.cpp" />
     <ClCompile Include="mapwidget.cpp" />
+    <ClCompile Include="Release\moc_listener.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Release\moc_mapwidget.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -351,7 +361,26 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ai_socket.h" />
     <ClInclude Include="GeneratedFiles\ui_mainwindow.h" />
+    <CustomBuild Include="listener.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing listener.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_OPENGL_ES_2 -DQT_OPENGL_ES_2_ANGLE "-I.\vlc-qt\include" "-I.\..\common" "-I.\INCLUDEPATH" "-I.\+=" "-I.\..\common\exiv2\msvc64\include" "-I$(BOOST_ROOT)\." "-I.\..\..\..\..\..\..\..\Qt\5.1.1\msvc2012_64\include" "-I.\..\..\..\..\..\..\..\Qt\5.1.1\msvc2012_64\include\QtWidgets" "-I.\..\..\..\..\..\..\..\Qt\5.1.1\msvc2012_64\include\QtGui" "-I.\..\..\..\..\..\..\..\Qt\5.1.1\msvc2012_64\include\QtANGLE" "-I.\..\..\..\..\..\..\..\Qt\5.1.1\msvc2012_64\include\QtCore" "-I.\debug" "-I." "-I.\..\..\..\..\..\..\..\Qt\5.1.1\msvc2012_64\mkspecs\win32-msvc2012" "-I.\GeneratedFiles"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing listener.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_ES_2 -DQT_OPENGL_ES_2_ANGLE -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 "-I.\vlc-qt\include" "-I.\..\common" "-I.\INCLUDEPATH" "-I.\+=" "-I.\..\common\exiv2\msvc64\include" "-I$(BOOST_ROOT)\." "-I.\..\..\..\..\..\..\..\Qt\5.1.1\msvc2012_64\include" "-I.\..\..\..\..\..\..\..\Qt\5.1.1\msvc2012_64\include\QtWidgets" "-I.\..\..\..\..\..\..\..\Qt\5.1.1\msvc2012_64\include\QtGui" "-I.\..\..\..\..\..\..\..\Qt\5.1.1\msvc2012_64\include\QtANGLE" "-I.\..\..\..\..\..\..\..\Qt\5.1.1\msvc2012_64\include\QtCore" "-I.\debug" "-I." "-I.\..\..\..\..\..\..\..\Qt\5.1.1\msvc2012_64\mkspecs\win32-msvc2012" "-I.\GeneratedFiles" "-I$(SolutionDir)\common" "-I$(SolutionDir)\common\exiv2\msvc64\include"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing listener.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_OPENGL_ES_2 -DQT_OPENGL_ES_2_ANGLE -DNDEBUG "-I.\vlc-qt\include" "-I.\..\common" "-I.\INCLUDEPATH" "-I.\+=" "-I.\..\common\exiv2\msvc64\include" "-I$(BOOST_ROOT)\." "-I.\..\..\..\..\..\..\..\Qt\5.1.1\msvc2012_64\include" "-I.\..\..\..\..\..\..\..\Qt\5.1.1\msvc2012_64\include\QtWidgets" "-I.\..\..\..\..\..\..\..\Qt\5.1.1\msvc2012_64\include\QtGui" "-I.\..\..\..\..\..\..\..\Qt\5.1.1\msvc2012_64\include\QtANGLE" "-I.\..\..\..\..\..\..\..\Qt\5.1.1\msvc2012_64\include\QtCore" "-I.\release" "-I." "-I.\..\..\..\..\..\..\..\Qt\5.1.1\msvc2012_64\mkspecs\win32-msvc2012" "-I.\GeneratedFiles"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing listener.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_OPENGL_ES_2 -DQT_OPENGL_ES_2_ANGLE -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 "-I.\vlc-qt\include" "-I.\..\common" "-I.\INCLUDEPATH" "-I.\+=" "-I.\..\common\exiv2\msvc64\include" "-I$(BOOST_ROOT)\." "-I.\..\..\..\..\..\..\..\Qt\5.1.1\msvc2012_64\include" "-I.\..\..\..\..\..\..\..\Qt\5.1.1\msvc2012_64\include\QtWidgets" "-I.\..\..\..\..\..\..\..\Qt\5.1.1\msvc2012_64\include\QtGui" "-I.\..\..\..\..\..\..\..\Qt\5.1.1\msvc2012_64\include\QtANGLE" "-I.\..\..\..\..\..\..\..\Qt\5.1.1\msvc2012_64\include\QtCore" "-I.\release" "-I." "-I.\..\..\..\..\..\..\..\Qt\5.1.1\msvc2012_64\mkspecs\win32-msvc2012" "-I.\GeneratedFiles" "-I$(SolutionDir)\common" "-I$(SolutionDir)\common\exiv2\msvc64\include"</Command>
+    </CustomBuild>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

@@ -77,12 +77,27 @@
     <ClCompile Include="..\common\gps_coord.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="listener.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug\moc_listener.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Release\moc_listener.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_socket.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="mainwindow.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="mapwidget.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="listener.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>
@@ -94,6 +109,9 @@
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_mainwindow.h">
       <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ai_socket.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

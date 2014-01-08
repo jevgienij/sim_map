@@ -1,7 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include "mapwidget.h"
+#include <mapwidget.h>
+#include <listener.h>
 
 #include <QInputDialog>
 
@@ -15,8 +16,10 @@ SimMapWindow::SimMapWindow(QWidget *parent) :
     ui(new Ui::SimMapWindow),
     _media(0)
 {
+	// setup GUI
     ui->setupUi(this);
 
+	// setup video transmission
     _instance = new VlcInstance(VlcCommon::args(), this);
     _player = new VlcMediaPlayer(_instance);
     _player->setVideoWidget(ui->video);
@@ -24,6 +27,10 @@ SimMapWindow::SimMapWindow(QWidget *parent) :
     ui->video->setMediaPlayer(_player);
 	
     connect(ui->setStreamUrl, SIGNAL(clicked()), this, SLOT(openMjpegUrl()));
+
+	// setup data receive via ai_socket 
+	Listener l;
+	QObject::connect(&l, SIGNAL(dataAvailable(int,int)), ui->mapWidget, SLOT(receiveData(int,int)));
 }
 
 SimMapWindow::~SimMapWindow()
