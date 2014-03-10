@@ -22,6 +22,9 @@ public:
     GPS_COORD& operator*=(const double& rhs);       // SCALING OPERATOR: rhs is in fact a scale factor keeping aspect ratio!
     GPS_COORD& operator/=(const GPS_COORD& rhs);    // SCALING OPERATOR: rhs is in fact a 2-dimensional scale factor!
     bool       operator< (const  GPS_COORD& rhs) const;
+    bool       operator<=(const  GPS_COORD& rhs) const;
+    bool       operator> (const  GPS_COORD& rhs) const;
+    bool       operator>=(const  GPS_COORD& rhs) const;
 
     // methods
     double					GetLongitudeDouble()   const { return dLongitude; };

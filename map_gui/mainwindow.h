@@ -4,6 +4,9 @@
 #include <QMainWindow>
 #include <QScrollBar>
 
+#include <mapwidget.h>
+#include <listener.h>
+
 namespace Ui {
 class SimMapWindow;
 }
@@ -34,6 +37,8 @@ private:
     VlcInstance *_instance;
     VlcMedia *_media;
     VlcMediaPlayer *_player;
+	
+	Listener l;
 };
 
 #endif // MAINWINDOW_H

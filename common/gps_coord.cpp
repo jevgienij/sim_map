@@ -98,6 +98,51 @@ bool GPS_COORD::operator< (const GPS_COORD& rhs) const
         return false;
 }
 
+bool GPS_COORD::operator<= (const GPS_COORD& rhs) const
+{
+    if (this->dLatitude > rhs.dLatitude)
+        return true;
+    else if (this->dLatitude == rhs.dLatitude)
+    {
+        if (this->dLongitude <= rhs.dLongitude)
+            return true;
+        else
+            return false;
+    }
+    else
+        return false;
+}
+
+bool GPS_COORD::operator> (const GPS_COORD& rhs) const
+{
+    if (this->dLatitude < rhs.dLatitude)
+        return true;
+    else if (this->dLatitude == rhs.dLatitude)
+    {
+        if (this->dLongitude > rhs.dLongitude)
+            return true;
+        else
+            return false;
+    }
+    else
+        return false;
+}
+
+
+bool GPS_COORD::operator>= (const GPS_COORD& rhs) const
+{
+    if (this->dLatitude < rhs.dLatitude)
+        return true;
+    else if (this->dLatitude == rhs.dLatitude)
+    {
+        if (this->dLongitude >= rhs.dLongitude)
+            return true;
+        else
+            return false;
+    }
+    else
+        return false;
+}
 
 // methods
 std::string GPS_COORD::GetLongitudeString() const

@@ -1,9 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include <mapwidget.h>
-#include <listener.h>
-
 #include <QInputDialog>
 
 #include <vlc-qt/Common.h>
@@ -29,8 +26,7 @@ SimMapWindow::SimMapWindow(QWidget *parent) :
     connect(ui->setStreamUrl, SIGNAL(clicked()), this, SLOT(openMjpegUrl()));
 
 	// setup data receive via ai_socket 
-	Listener l;
-	QObject::connect(&l, SIGNAL(dataAvailable(int,int)), ui->mapWidget, SLOT(receiveData(int,int)));
+	QObject::connect(&l, SIGNAL(dataAvailable(XXX_MAPGUI_STRUCT)), ui->mapWidget, SLOT(receiveData(XXX_MAPGUI_STRUCT)));
 }
 
 SimMapWindow::~SimMapWindow()
@@ -53,12 +49,14 @@ void SimMapWindow::openMjpegUrl()
 
     _player->open(_media);
 }
- void SimMapWindow::resizeEvent(QResizeEvent *event)
- {	 
+
+void SimMapWindow::resizeEvent(QResizeEvent *event)
+{	
+	QWidget::resizeEvent(event); 
     adjustScrollBar(ui->scrollArea->verticalScrollBar());
-	adjustScrollBar(ui->scrollArea->horizontalScrollBar());
-    QWidget::resizeEvent(event);
- }
+    adjustScrollBar(ui->scrollArea->horizontalScrollBar());    
+	repaint();
+}
 
  void SimMapWindow::adjustScrollBar(QScrollBar *scrollBar)
  {

@@ -11,6 +11,7 @@
 
 #include <db_gen.h>
 #include <gps_coord.h>
+#include <listener.h>
 
 class MapWidget : public QWidget
 {
@@ -25,11 +26,18 @@ protected:
     QElapsedTimer timer;			// timer used in UAV path drawing	
 	std::vector<GPS_COORD> UavPath;	// vector of UAV position points for UAV path drawing
 
+	double dUavLatitude;
+	double dUavLongitude;
+	double dUavAltitude; // data received from simulator
+	
+	bool bPrevPaintWasError; 
+	bool bCurrPaintIsError;  // painting error flags
+
 
 signals:
 
 public slots:
-	void receiveData(int x, int y);
+	void receiveData(XXX_MAPGUI_STRUCT receivedData);
 };
 
 template <typename Source, typename Target>

@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
     SimMapWindow window;
-    window.showMaximized();
+    window.show();
 
     return a.exec();
 }
