@@ -118,7 +118,13 @@ void MapWidget::paintEvent(QPaintEvent *)
 
 			for (int it_col=iUAVcol-tileColsInView;it_col<iUAVcol+tileColsInView;it_col++)
 			{
-				if (it_col < 0 || it_col >= imageDatabase.size() || it_row < 0 || it_row >= imageDatabase.size())
+				if (it_row < 0 || it_row >= imageDatabase.size())
+				{
+					painter.drawImage( (it_col-(iUAVcol-tileColsInView))*iTileSize, (it_row-(iUAVrow-tileRowsInView))*iTileSize, noDataTile);
+				}
+				else if (it_col < 0 || it_col >= imageDatabase.at(it_row).size()) 
+					// nie mozna wrzucic razem do poprzedniego ifa, gdyz jest ryzyko przekroczenia zakresu wolajac imageDatabase.at(it_row).size()
+					// sprawdzenie zakresu it_row w poprzednim ifie powoduje, ze ta galaz warunku zostanie wywolana tylko dla prawidlowych wartosci it_row
 				{
 					painter.drawImage( (it_col-(iUAVcol-tileColsInView))*iTileSize, (it_row-(iUAVrow-tileRowsInView))*iTileSize, noDataTile);
 				}

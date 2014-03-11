@@ -1,5 +1,5 @@
 # BEGIN #
-dUavLatitude 1.82711e-317
+dUavLatitude 1.95663e-317
 dUavLongitude -1.#QNAN
 dUavAltitude  3.95253e-323
 
